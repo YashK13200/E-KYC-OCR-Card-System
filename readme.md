@@ -5,6 +5,13 @@ Welcome to the E-KYC project! This application utilizes modern techniques in com
 
 The E-KYC web app provides an intuitive interface where users can upload their ID card and a face photograph. The system extracts the face from the ID card and compares it with the provided image to validate identity, followed by secure storage of verified data.
 
+## ID Card Support For Now 
+
+- **Aadhar Card**
+- **Pan Card**
+- **College ID**
+
+
 ### Features
 
 1. **Face Verification**: Uses Haarcascade to detect and crop faces from ID cards and compares them with a user-uploaded face image. If the verification passes, the process continues; otherwise, the user is notified.
