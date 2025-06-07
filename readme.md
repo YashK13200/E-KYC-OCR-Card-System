@@ -54,7 +54,7 @@ Example: Uploading Aadhar with another person’s face fails face verification. 
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/YashKashyap-cyber/E-KYC-OCR.git
+    git clone https://github.com/YashK13200/E-KYC-OCR-Card-System.git
     cd E-KYC-OCR
     ```
 
