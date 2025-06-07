@@ -20,13 +20,13 @@ The E-KYC web app provides an intuitive interface where users can upload their I
 
 ## Face Verification Demo
 
-![E-KYC-FACE VERIFICATION DEMO](https://github.com/abhishekiiitbh2903/E-KYC-/blob/main/assets/Face%20Verification.gif)
+
 
 This demonstration shows how mismatched face images trigger verification failure, while matching images allow successful data entry and duplicate detection.
 
 ## Full Workflow of Web App
 
-![Full Workflow](https://github.com/abhishekiiitbh2903/E-KYC-/blob/main/assets/Full%20Workflow.gif)
+
 
 Example: Uploading Aadhar with another person’s face fails face verification. Re-uploading with the correct face allows successful database insertion. Reuploading again confirms the system detects duplicates effectively.
 
