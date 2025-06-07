@@ -1,137 +1,131 @@
 # E-KYC Project
-Welcome to the E-KYC project! This project leverages cutting-edge techniques in computer vision, natural language processing, convolutional neural networks (CNNs), and long short-term memory networks (LSTMs) to facilitate automatic Know Your Customer (KYC) processes. 
+Welcome to the E-KYC project! This application utilizes modern techniques in computer vision and OCR (Optical Character Recognition) to automate and streamline Know Your Customer (KYC) verification, specifically for Aadhar, PAN, and College ID cards.
 
 ## Overview
 
-The E-KYC web application provides an interactive user interface where users can upload their ID card (limited to Aadhar and PAN cards at the moment) and a photograph of their face. The app then internally processes the provided ID card to extract the face and matches it with the uploaded photograph. 
+The E-KYC web app provides an intuitive interface where users can upload their ID card and a face photograph. The system extracts the face from the ID card and compares it with the provided image to validate identity, followed by secure storage of verified data.
 
 ### Features
 
-1. **Face Verification**: The app computes the face from the provided ID card using Haarcascade and matches it with the uploaded photograph. If the verification status is successful, subsequent operations are carried out; otherwise, an error is generated.
+1. **Face Verification**: Uses Haarcascade to detect and crop faces from ID cards and compares them with a user-uploaded face image. If the verification passes, the process continues; otherwise, the user is notified.
    
+2. **Optical Character Recognition (OCR)**: On successful face match, the app extracts text from the ID card using EasyOCR.
+
+3. **Database Handling**:
+   - Extracted data and face embeddings are checked for duplicacy.
+   - If already registered, no duplicate entry is created.
+   - Data is securely inserted into a MySQL database.
+
+4. **Face Embeddings**: Utilizes DeepFace and FaceNet to extract face embeddings for enhanced matching accuracy.
+
 ## Face Verification Demo
 
 ![E-KYC-FACE VERIFICATION DEMO](https://github.com/abhishekiiitbh2903/E-KYC-/blob/main/assets/Face%20Verification.gif)
 
+This demonstration shows how mismatched face images trigger verification failure, while matching images allow successful data entry and duplicate detection.
 
-Herein, I have uploaded an ID card of my dad and an image of myself. As a result, the face verification fails, and as stated above, the subsequent codes do not execute.
-
-2. **Optical Character Recognition (OCR)**: If face verification is successful, the app uses EasyOCR with a predefined threshold value to extract text from the ID card.
-3. **Database Interaction**: The extracted text and face embeddings are checked for duplicacy before being inserted into the database. If the user is already registered, the SQL query is not executed, and the fetched result is returned.
-4. **Face Embeddings**: The app uses FaceNet from DeepFace to retrieve face embeddings, which are also stored in the database.
-
-## Full Workflow of web app
+## Full Workflow of Web App
 
 ![Full Workflow](https://github.com/abhishekiiitbh2903/E-KYC-/blob/main/assets/Full%20Workflow.gif)
 
-I first uploaded my Aadhar ID and a photo of my dad. The app flagged a warning as face verification failed, and subsequent code didn't execute. Then, I uploaded my own face image, the verification succeeded, and my data was inserted into the database. To check for duplicacy and confirm my data was correctly inserted, I reuploaded my face image. The response indicated that a person with my ID already exists in the database, validating proper database handling and ensuring no data duplicacy.
+Example: Uploading Aadhar with another person’s face fails face verification. Re-uploading with the correct face allows successful database insertion. Reuploading again confirms the system detects duplicates effectively.
 
+## Technologies Used
 
-### Technologies Used
-
-- **Computer Vision**: For face detection and verification.
-- **Natural Language Processing**: For text extraction and processing.
-- **Convolutional Neural Networks (CNNs)**: For image processing tasks.
-- **Long Short-Term Memory Networks (LSTMs)**: For handling sequential data.
-- **EasyOCR**: For OCR operations.
-- **DeepFace**: For face embeddings.
-- **Haarcascade**: For detecting faces in ID cards.
+- **Streamlit**: For building interactive frontend
+- **Computer Vision**: For face detection and matching
+- **EasyOCR**: For extracting text from ID cards
+- **DeepFace + FaceNet**: For facial embeddings
+- **Haarcascade**: For real-time face detection
+- **MySQL**: For database storage and retrieval
 
 ## Upcoming Improvements
 
-1. **Live Face Detection**: Instead of taking a face image from the user, the app will detect the face image live using the device's camera.
-2. **Data Privacy**: Currently, original values are stored in the database. In future updates, sensitive data (like original IDs) will be hashed before storage to ensure privacy even if the database is compromised.
-**[COMPLETED]**
+- ✅ **College ID Card Support** (Completed)
+- 🔄 **Live Face Capture** via webcam
+- 🔐 **Hashed Data Storage** for sensitive user information (completed)
 
 ## Prerequisites
 
-Ensure you have the following installed:
-- Python 12.0
-- MySQL server
+- Python 3.x
+- MySQL Server (running locally or remotely)
 
 ## Setup Instructions
 
 1. **Clone the Repository**:
-    ```sh
-    https://github.com/abhishekiiitbh2903/E-KYC-.git
-    cd E-KYC-
+    ```bash
+    git clone https://github.com/YashKashyap-cyber/E-KYC-OCR.git
+    cd E-KYC-OCR
     ```
 
 2. **Create a Virtual Environment**:
-    ```sh
+    ```bash
     python -m venv .venv 
     ```
 
 3. **Activate the Virtual Environment**:
     - On Windows:
-      ```sh
+      ```bash
       .\.venv\Scripts\activate
       ```
     - On macOS/Linux:
-      ```sh
+      ```bash
       source .venv/bin/activate
       ```
 
-4. **Install the Required Packages**:
-    ```sh
+4. **Install Required Packages**:
+    ```bash
     pip install -r requirements.txt
     ```
 
-5. **Create the `config.toml` File**:
-    In the root directory of the project (same directory as `app.py`), create a file named `config.toml` and add the following content to it:
-
+5. **Add a `config.toml` File**:
+    In your project root, create a `config.toml` file with:
     ```toml
     [database]
-    user = "your_username"
-    password = "your_password"
+    user = "your_mysql_user"
+    password = "your_mysql_password"
     host = "localhost"
-    database = "your_database_name"
+    database = "ekyc"
     ```
 
-    Replace `"your_username"`, `"your_password"`, and `"your_database_name"` with your actual MySQL credentials.
-
-6. **Run the Application**:
-    ```sh
+6. **Run the App**:
+    ```bash
     streamlit run app.py
     ```
 
-## Important Notes
+## Security Best Practices
 
-- **Security**: Ensure that your `config.toml` file is included in the `.gitignore` file to prevent sensitive information from being uploaded to any public repository.
-
-- **.gitignore**: The `.gitignore` file should include the following lines to ignore the virtual environment and configuration files:
-
+- Your `.gitignore` must include:
     ```plaintext
-    # Ignore virtual environment directory
     .venv/
-    
-    # Ignore config.toml file
     config.toml
+    logs/
     ```
+- Never push `config.toml` or `.venv` to GitHub.
 
 ## Logging
 
-The application logs various events and errors for easier debugging and monitoring. Logs are stored in the `logs` directory. Ensure this directory exists in your local setup or create it manually if it does not exist.
-
-**Note**: The `logs` directory has not been included in the repository to prevent accidental exposure of sensitive information or potential data breaches from logs related to your local system.
-
-Proper logging practices have been implemented throughout the project to ensure comprehensive error tracking and system monitoring.
-
+- The app logs errors and activities in the `logs/` directory.
+- This directory is ignored in the repository to protect sensitive information.
 
 ## Troubleshooting
 
-- **Database Connection Issues**: Ensure your MySQL server is running and the credentials in `config.toml` are correct.
-- **Dependencies**: If you encounter issues with missing packages, ensure all required packages are installed by running `pip install -r requirements.txt`.
+- **MySQL errors**: Check if your database and credentials in `config.toml` are correct.
+- **Missing packages**: Ensure all dependencies are installed.
+- **Table Errors**: Ensure the `aadhar`, `pan`, and other required tables are created beforehand.
 
-Feel free to open an issue if you encounter any problems or have questions about the setup process.
-
+---
 
 ## Author
 
-This project is authored by Abhishek Singh, a final year B.Tech CSE undergraduate at IIIT Bhagalpur. You can reach me at abhishekrathore1806@gmail.com.
+**Yash Kumar Kashyap**  
+Final Year B.Tech CSE Undergraduate  
+CSJM University, Kanpur  
+📧   
+🔗 [LinkedIn]
 
 ## Contributing
 
-I am open to contributions! If you can work on the possible areas of improvement or have other enhancements in mind, feel free to fork the repository, make your changes, and initiate a pull request. If the changes are legitimate and add value to the project, I will merge them.
+Feel free to contribute by opening issues or submitting pull requests! I'm open to feature suggestions, bug fixes, and improvements.
 
-Happy coding! 😊
+Happy Building! 🚀
